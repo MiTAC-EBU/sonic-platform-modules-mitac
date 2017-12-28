@@ -1,0 +1,102 @@
+#!/bin/bash
+
+### BEGIN INIT INFO
+# Provides:          setup-board
+# Required-Start:
+# Required-Stop:
+# Should-Start:
+# Should-Stop:
+# Default-Start:     S
+# Default-Stop:      0 6
+# Short-Description: Setup ly1200-32x board.
+### END INIT INFO
+
+# Load kernel modules
+load_modules () {
+        if [ `lsmod | grep -c "i2c_i801 "` -eq 1 ]; then
+                rmmod i2c_i801
+                rmmod i2c_ismt
+        fi
+        modprobe i2c_i801
+        modprobe i2c_ismt
+        if [ `lsmod | grep -c "at24 "` -eq 0 ]; then
+                insmod /lib/modules/`uname -r`/kernel/drivers/misc/eeprom/at24.ko
+        fi
+        if [ `lsmod | grep -c "i2c_mux "` -eq 0 ]; then
+                insmod /lib/modules/`uname -r`/kernel/drivers/i2c/i2c-mux.ko
+        fi
+        if [ `lsmod | grep -c "i2c_mux_pca954x "` -eq 0 ]; then
+                insmod /lib/modules/`uname -r`/kernel/drivers/i2c/muxes/i2c-mux-pca954x.ko
+        fi
+        if [ `lsmod | grep -c "lm75 "` -eq 0 ]; then
+                insmod /lib/modules/`uname -r`/kernel/drivers/hwmon/lm75.ko
+        fi
+        if [ `lsmod | grep -c "max31790 "` -eq 0 ]; then
+                insmod /lib/modules/`uname -r`/kernel/drivers/hwmon/max31790.ko
+        fi
+        if [ `lsmod | grep -c "sff_8436_eeprom "` -eq 0 ]; then
+                insmod /lib/modules/`uname -r`/kernel/drivers/misc/eeprom/sff_8436_eeprom.ko
+        fi
+        if [ `lsmod | grep -c "mitac_ly1200_32x_fse000 "` -eq 0 ]; then
+                insmod /lib/modules/`uname -r`/extra/mitac_ly1200_32x_fse000.ko
+        fi
+        if [ `lsmod | grep -c "mitac_ly1200_32x_system_cpld "` -eq 0 ]; then
+                insmod /lib/modules/`uname -r`/extra/mitac_ly1200_32x_system_cpld.ko
+        fi
+        if [ `lsmod | grep -c "mitac_ly1200_32x_master_cpld "` -eq 0 ]; then
+                insmod /lib/modules/`uname -r`/extra/mitac_ly1200_32x_master_cpld.ko
+        fi
+        if [ `lsmod | grep -c "mitac_ly1200_32x_slave_cpld "` -eq 0 ]; then
+                insmod /lib/modules/`uname -r`/extra/mitac_ly1200_32x_slave_cpld.ko
+        fi
+        if [ `lsmod | grep -c "mitac_ly1200_32x_cb_i2c "` -eq 0 ]; then
+                insmod /lib/modules/`uname -r`/extra/mitac_ly1200_32x_cb_i2c.ko
+        fi
+        if [ `lsmod | grep -c "mitac_ly1200_32x_sb_i2c "` -eq 0 ]; then
+                insmod /lib/modules/`uname -r`/extra/mitac_ly1200_32x_sb_i2c.ko
+        fi
+        if [ `lsmod | grep -c "mitac_ly1200_32x_pb_i2c "` -eq 0 ]; then
+                insmod /lib/modules/`uname -r`/extra/mitac_ly1200_32x_pb_i2c.ko
+        fi
+        if [ `lsmod | grep -c "mitac_ly1200_32x_fb_i2c "` -eq 0 ]; then
+                insmod /lib/modules/`uname -r`/extra/mitac_ly1200_32x_fb_i2c.ko
+        fi
+        if [ `lsmod | grep -c "mitac_ly1200_32x_fb_module_i2c "` -eq 0 ]; then
+                insmod /lib/modules/`uname -r`/extra/mitac_ly1200_32x_fb_module_i2c.ko
+        fi
+}
+
+# Load i2c_dev modules
+load_i2c_dev_modules () {
+        if [ `lsmod | grep -c "i2c_dev "` -eq 0 ]; then
+                modprobe i2c_dev
+        fi
+}
+
+case "$1" in
+start)
+    echo -n "Setting up board... "
+    load_i2c_dev_modules
+    load_modules
+    echo "done."
+    ;;
+
+stop)
+    echo -n "cleaning... "
+
+
+    echo "done."
+
+    ;;
+
+force-reload|restart)
+    echo "Not supported"
+    ;;
+
+*)
+    echo "Usage: /etc/init.d/i2c_init {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0
