@@ -27,6 +27,7 @@
 *.i*86
 *.x86_64
 *.hex
+!ly1200-32x/opt/sdk-xgs-robo/led/*.hex
 
 # Debug files
 *.dSYM/
