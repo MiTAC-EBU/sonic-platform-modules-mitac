@@ -1,98 +1,3 @@
-/*
- **********************************************************************
- *
- * @filename  bms_fb_module_i2c.c
- *
- * @purpose   Driver to instantiate BMS fan board module i2c devices
- *
- * @create    2017/1/5
- *
- * @author    eddy weng <eddy.weng@mic.com.tw>
- *
- * @history   2017/1/5: init version
- *
- **********************************************************************
- */
-/*
- * $Copyright: Copyright 2017 MiTAC Co., Ltd.
- * This program is the proprietary software of MiTAC Corporation
- * and/or its licensors, and may only be used, duplicated, modified
- * or distributed pursuant to the terms and conditions of a separate,
- * written license agreement executed between you and MiTAC
- * (an "Authorized License").  Except as set forth in an Authorized
- * License, MiTAC grants no license (express or implied), right
- * to use, or waiver of any kind with respect to the Software, and
- * MiTAC expressly reserves all rights in and to the Software
- * and all intellectual property rights therein.  IF YOU HAVE
- * NO AUTHORIZED LICENSE, THEN YOU HAVE NO RIGHT TO USE THIS SOFTWARE
- * IN ANY WAY, AND SHOULD IMMEDIATELY NOTIFY MITAC AND DISCONTINUE
- * ALL USE OF THE SOFTWARE.
- *
- * Except as expressly set forth in the Authorized License,
- *
- * 1.     THIS PROGRAM, INCLUDING ITS STRUCTURE, SEQUENCE AND ORGANIZATION,
- * CONSTITUTES THE VALUABLE TRADE SECRETS OF MITAC, AND YOU SHALL USE
- * ALL REASONABLE EFFORTS TO PROTECT THE CONFIDENTIALITY THEREOF,
- * AND TO USE THIS INFORMATION ONLY IN CONNECTION WITH YOUR USE OF
- * MITAC PRODUCTS.
- *
- * 2.     TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE SOFTWARE IS
- * PROVIDED "AS IS" AND WITH ALL FAULTS AND MITAC MAKES NO PROMISES,
- * REPRESENTATIONS OR WARRANTIES, EITHER EXPRESS, IMPLIED, STATUTORY,
- * OR OTHERWISE, WITH RESPECT TO THE SOFTWARE.  MITAC SPECIFICALLY
- * DISCLAIMS ANY AND ALL IMPLIED WARRANTIES OF TITLE, MERCHANTABILITY,
- * NONINFRINGEMENT, FITNESS FOR A PARTICULAR PURPOSE, LACK OF VIRUSES,
- * ACCURACY OR COMPLETENESS, QUIET ENJOYMENT, QUIET POSSESSION OR
- * CORRESPONDENCE TO DESCRIPTION. YOU ASSUME THE ENTIRE RISK ARISING
- * OUT OF USE OR PERFORMANCE OF THE SOFTWARE.
- *
- * 3.     TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT SHALL
- * MITAC OR ITS LICENSORS BE LIABLE FOR (i) CONSEQUENTIAL,
- * INCIDENTAL, SPECIAL, INDIRECT, OR EXEMPLARY DAMAGES WHATSOEVER
- * ARISING OUT OF OR IN ANY WAY RELATING TO YOUR USE OF OR INABILITY
- * TO USE THE SOFTWARE EVEN IF MITAC HAS BEEN ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGES; OR (ii) ANY AMOUNT IN EXCESS OF
- * THE AMOUNT ACTUALLY PAID FOR THE SOFTWARE ITSELF OR USD 1.00,
- * WHICHEVER IS GREATER. THESE LIMITATIONS SHALL APPLY NOTWITHSTANDING
- * ANY FAILURE OF ESSENTIAL PURPOSE OF ANY LIMITED REMEDY.
- *
- * 4.     REDISTRIBUTIONS IN BINARY FORM MUST REPRODUCE BELOW COPYRIGHT NOTICS
- */
-/* fan board module i2c topology
- *
- *                             +------------+
- *                             | FAN EEPROM |
- *                           +-|   M24C02   |
- *                           | |  (3:0x50)  |
- *                           | +------------+
- *                           | +------------+
- *                           | | FAN EEPROM |
- *                           +-|   M24C02   |
- *                           | |  (3:0x51)  |
- *                           | +------------+
- *                           | +------------+
- *                           | | FAN EEPROM |
- *                           +-|   M24C02   |
-                             | |  (3:0x52)  |
- *                           | +------------+
- * (switch board connecter)--+ +------------+
- *    (I2C Switch chan1)     | | FAN EEPROM |
- *                           +-|   M24C02   |
- *                           | |  (3:0x53)  |
- *                           | +------------+
- *                           | +------------+
- *                           | | FAN EEPROM |
- *                           +-|   M24C02   |
- *                           | |  (3:0x54)  |
- *                           | +------------+
- *                           | +------------+
- *                           | | FAN EEPROM |
- *                           +-|   M24C02   |
- *                             |  (3:0x55)  |
- *                             +------------+
- */
-
-
 #include <linux/i2c.h>
 #include <linux/module.h>
 #include "bms_i2c.h"
@@ -227,7 +132,7 @@ module_init(bms_fb_module_i2c_init);
 module_exit(bms_fb_module_i2c_exit);
 
 
-MODULE_DESCRIPTION("BMS Fan Board module I2c driver");
-MODULE_AUTHOR("eddy weng <eddy.weng@mic.com.tw>");
+MODULE_DESCRIPTION("mitac_ly1200_32x_fb_module_i2c driver");
+MODULE_AUTHOR("Eddy Weng <eddy.weng@mic.com.tw>");
 MODULE_LICENSE("GPL");
 

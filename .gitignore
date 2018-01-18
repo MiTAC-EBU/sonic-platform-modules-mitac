@@ -1,46 +1,17 @@
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
-
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
-
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
-!ly1200-32x/opt/sdk-xgs-robo/led/*.hex
-
-# Debug files
-*.dSYM/
-*.su
-
 # Build file
-*.cmd
-ly1200-32x/modules/.tmp_versions/
-ly1200-32x/modules/Module.symvers
 ly1200-32x/modules/*.mod.c
+ly1200-32x/modules/*.mod.o
+ly1200-32x/modules/*.o
+ly1200-32x/modules/*.ko
+ly1200-32x/modules/*.cmd
+ly1200-32x/modules/Module.symvers
 ly1200-32x/modules/modules.order
-debian/files
-*.log
-*.debhelper
-debian/sonic-platform-mitac-ly1200-32x.substvars
+ly1200-32x/modules/.tmp_versions
+
 debian/sonic-platform-mitac-ly1200-32x/
+debian/sonic-platform-mitac-ly1200-32x.debhelper.log
+debian/sonic-platform-mitac-ly1200-32x.postinst.debhelper
+debian/sonic-platform-mitac-ly1200-32x.postrm.debhelper
+debian/sonic-platform-mitac-ly1200-32x.prerm.debhelper
+debian/sonic-platform-mitac-ly1200-32x.substvars
+debian/files

@@ -1,20 +1,3 @@
-/*
- **********************************************************************
- *
- * @filename  system_cpld.c
- *
- * @purpose   Driver to instantiate BMS switch board system cpld devices
- *
- * @create    2017/1/5
- *
- * @author    eddy weng <eddy.weng@mic.com.tw>
- *
- * @history   2017/01/05: init version
- *            2017/02/07: Add register table and using macro to define all struct
- *            2017/02/17: Change semaphore place and move cpld read and write function to c code
- *
- **********************************************************************
- */
 #define CONFIG_DRV_SYSCPLD_WDT 1
 
 #include <linux/module.h>
@@ -552,7 +535,7 @@ static void __exit system_cpld_exit(void)
 }
 module_exit(system_cpld_exit);
 
-MODULE_DESCRIPTION("Driver for cpld system lcmxo3lf");
-MODULE_AUTHOR("Eddy Weng");
+MODULE_DESCRIPTION("mitac_ly1200_32x_system_cpld driver");
+MODULE_AUTHOR("Eddy Weng <eddy.weng@mic.com.tw>");
 MODULE_LICENSE("GPL");
 

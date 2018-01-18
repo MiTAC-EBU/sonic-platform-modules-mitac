@@ -1,18 +1,3 @@
-/*
- **********************************************************************
- *
- * @filename  bms_gpe.c
- *
- * @purpose   Driver for registering gpe handler
- *
- * @create    2017/04/28
- *
- * @author    Yencheng Lin <yencheng.lin@mic.com.tw>
- *
- * @history   2017/04/28: init version
- *
- **********************************************************************
- */
 #include <linux/module.h>
 #include <linux/acpi.h>
 
@@ -103,6 +88,6 @@ static void __exit bms_gpe_exit(void)
 
 module_init(bms_gpe_init);
 module_exit(bms_gpe_exit);
-MODULE_AUTHOR("Yencheng Lin<yencheng.lin@mic.com.tw>");
-MODULE_DESCRIPTION("Driver for registering gpe handler");
+MODULE_AUTHOR("Yencheng Lin <yencheng.lin@mic.com.tw>");
+MODULE_DESCRIPTION("mitac_ly1200_32x_gpe driver");
 MODULE_LICENSE("GPL");

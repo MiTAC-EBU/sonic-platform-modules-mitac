@@ -15,10 +15,6 @@ case "$1" in
 start)
     echo -n "Setting up board... "
 
-    modprobe lfdd_drv
-    modprobe iqvlinux
-    modprobe ehset
-
     echo 0 > /proc/sys/kernel/perf_cpu_time_max_percent
 
     /etc/init.d/gpe start
@@ -28,18 +24,11 @@ start)
     /etc/init.d/sys_servd start
     /etc/init.d/sys_polld start
 
-    # add mount /opt folder for syncd
-    sed -i 's/platform:ro \\/platform:ro -v \/opt\/sdk-xgs-robo:\/opt\/sdk-xgs-robo:ro \\/g' /usr/bin/syncd.sh
-
     echo "done."
     ;;
 
 stop)
     echo -n "cleaning... "
-
-    rmmod lfdd_drv
-    rmmod iqvlinux
-    rmmod ehset
 
     /etc/init.d/gpe stop
     /etc/init.d/i2c_init stop
