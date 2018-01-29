@@ -11,16 +11,126 @@
 # Short-Description: Setup ly1200-32x board.
 ### END INIT INFO
 
+I2C_I801_RM_PRINT=0
+I2C_ISMT_RM_PRINT=0
+I2C_I801_INS_PRINT=0
+I2C_ISMT_INS_PRINT=0
+I2C_I801_RM_RETRY=0
+I2C_ISMT_RM_RETRY=0
+I2C_I801_INS_RETRY=0
+I2C_ISMT_INS_RETRY=0
+RETRY=3
+
+# process name/id
+DAEMON_NAME=`basename $0`
+DAEMON_PID="$$"
+
+# default log file
+DEF_LOG_FILE="/var/log/syslog"
+
+#/*
+#* FEATURE:
+#*   log_msg
+#* PURPOSE:
+#*   log message
+#* PARAMETERS:
+#*   msg                  (IN) message
+#* RETURNS:
+#*
+#*/
+function log_msg() {
+  local msg=$1
+
+  echo -e "`date +"%b %_d %T"` `hostname` $DAEMON_NAME[$DAEMON_PID]: ${msg}" >> ${DEF_LOG_FILE}
+}
+
+
 # Load kernel modules
 load_modules () {
+        #----------remove i801 start---------------------
         if [ `lsmod | grep -c "i2c_i801 "` -eq 1 ]; then
                 rmmod i2c_i801
+                while [ `lsmod | grep -c "i2c_i801 "` -eq 1 ]
+                do
+                        if [ $I2C_I801_RM_PRINT -eq 0 ]; then
+                                I2C_I801_RM_PRINT=1
+                                log_msg "Wait for i2c_i801 remove."
+                        fi
+                        if [ $I2C_I801_RM_RETRY -lt $RETRY ];then
+                                I2C_I801_RM_RETRY=$((I2C_I801_RM_RETRY + 1))
+                        else
+                                break
+                        fi
+                        sleep 1
+                done
+                if [ $I2C_I801_RM_PRINT -eq 1 ]; then
+                        log_msg "i2c_i801 remove success."
+                fi
         fi
+        #----------remove i801 end------------------------
+
+
+        #----------remove ismt start----------------------
         if [ `lsmod | grep -c "i2c_ismt "` -eq 1 ]; then
                 rmmod i2c_ismt
+                while [ `lsmod | grep -c "i2c_ismt "` -eq 1 ]
+                do
+                        if [ $I2C_ISMT_RM_PRINT -eq 0 ]; then
+                                I2C_ISMT_RM_PRINT=1
+                                log_msg "Wait for i2c_ismt remove."
+                        fi
+                        if [ $I2C_ISMT_RM_RETRY -lt $RETRY ];then
+                                I2C_ISMT_RM_RETRY=$((I2C_ISMT_RM_RETRY + 1))
+                        else
+                                break
+                        fi
+                        sleep 1
+                done
+                if [ $I2C_ISMT_RM_PRINT -eq 1 ]; then
+                        log_msg "i2c_ismt remove success."
+                fi
         fi
-        modprobe i2c_i801
-        modprobe i2c_ismt
+        #----------remove ismt end------------------------
+
+        #----------insert i801 start----------------------
+        insmod /lib/modules/`uname -r`/kernel/drivers/i2c/busses/i2c-i801.ko
+        while [ `lsmod | grep -c "i2c_i801 "` -eq 0 ]
+        do
+                if [ $I2C_I801_INS_PRINT -eq 0 ]; then
+                        I2C_I801_INS_PRINT=1
+                        log_msg "Wait for i2c_i801 insert."
+                fi
+                if [ $I2C_I801_INS_RETRY -lt $RETRY ];then
+                        I2C_I801_INS_RETRY=$((I2C_I801_INS_RETRY + 1))
+                else
+                        break
+                fi
+                sleep 1
+        done
+        if [ $I2C_I801_INS_PRINT -eq 1 ]; then
+                log_msg "i2c_i801 insert success."
+        fi
+        #----------insert i801 end------------------------
+
+        #----------insert ismt start----------------------
+        insmod /lib/modules/`uname -r`/kernel/drivers/i2c/busses/i2c-ismt.ko
+        while [ `lsmod | grep -c "i2c_ismt "` -eq 0 ]
+        do
+                if [ $I2C_ISMT_INS_PRINT -eq 0 ]; then
+                        I2C_ISMT_INS_PRINT=1
+                        log_msg "Wait for i2c_ismt insert."
+                fi
+                if [ $I2C_ISMT_INS_RETRY -lt $RETRY ];then
+                        I2C_ISMT_INS_RETRY=$((I2C_ISMT_INS_RETRY + 1))
+                else
+                        break
+                fi
+                sleep 1
+        done
+        if [ $I2C_ISMT_INS_PRINT -eq 1 ]; then
+                log_msg "i2c_ismt insert success."
+        fi
+        #----------insert ismt start------------------------
         if [ `lsmod | grep -c "at24 "` -eq 0 ]; then
                 insmod /lib/modules/`uname -r`/kernel/drivers/misc/eeprom/at24.ko
         fi
