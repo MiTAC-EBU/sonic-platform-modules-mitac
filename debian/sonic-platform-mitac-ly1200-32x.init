@@ -19,11 +19,9 @@ start)
 
     /etc/init.d/gpe start
     /etc/init.d/i2c_init start
-    /usr/sbin/watchdog /opt/watchdog/watchdog.conf
-    /etc/init.d/xcvr_servd start
-    /etc/init.d/sys_servd start
     /etc/init.d/sys_polld start
-
+    /opt/script/start_watchdog.sh &
+    /opt/script/start_service.sh &
     echo "done."
     ;;
 
