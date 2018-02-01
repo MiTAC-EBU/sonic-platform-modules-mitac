@@ -16,11 +16,11 @@ REVERSE_PWM_CONF=${DIR}/fan-zone-thermal_B2F.conf
 # 0x1 (0001b): BMS_AC_PSU_REVERSE_FAN, 0x3 (0011b): BMS_DC_PSU_REVERSE_FAN
 case $BOARD_TYPE in
     0x0|0x2)
-        ln -sf $FORWARD_SENSOR_CONF fan-zone.conf
-        ln -sf $FORWARD_PWM_CONF fan-zone-thermal.conf
+        ln -sf $FORWARD_SENSOR_CONF ${DIR}/fan-zone.conf
+        ln -sf $FORWARD_PWM_CONF ${DIR}/fan-zone-thermal.conf
     ;;
     0x1|0x3)
-        ln -sf $REVERSE_SENSOR_CONF fan-zone.conf
-        ln -sf $REVERSE_PWM_CONF fan-zone-thermal.conf
+        ln -sf $REVERSE_SENSOR_CONF ${DIR}/fan-zone.conf
+        ln -sf $REVERSE_PWM_CONF ${DIR}/fan-zone-thermal.conf
     ;;
 esac
