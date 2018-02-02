@@ -4,9 +4,6 @@
 DAEMON_NAME=`basename $0`
 DAEMON_PID="$$"
 
-# default log file
-DEF_LOG_FILE="/var/log/syslog"
-
 DEF_SEVERITY="INFO"
 
 #/*
@@ -22,5 +19,5 @@ DEF_SEVERITY="INFO"
 function log_msg() {
   local msg=$1
 
-  echo -e "`date +"%b %_d %T"` `hostname` $DEF_SEVERITY  $DAEMON_NAME[$DAEMON_PID]: ${msg}" >> ${DEF_LOG_FILE}
+  `logger -t $DAEMON_NAME -p $DEF_SEVERITY $msg`
 }

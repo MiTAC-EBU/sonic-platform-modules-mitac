@@ -80,12 +80,17 @@ E_INVALID_ARGS=11
 E_INVALID_CONF=12
 
 # message levels
-MSG_INFO=0
-MSG_WARN=1
-MSG_ERROR=2
+MSG_EMERG=0
+MSG_ALERT=1
+MSG_CRIT=2
+MSG_ERR=3
+MSG_WARNING=4
+MSG_NOTICE=5
+MSG_INFO=6
+MSG_DEBUG=7
 
 # default message level
-DEF_MSG_LEVEL=$MSG_WARN
+DEF_MSG_LEVEL=$MSG_WARNING
 
 #/*
 #**********************************************************************
@@ -172,7 +177,7 @@ function print_msg() {
   local msg_lvl=$1
   local msg=$2
 
-  [ $msg_lvl -ge $GBL_MSG_LEVEL ] && echo "${msg}" >&2
+  [ $msg_lvl -le $GBL_MSG_LEVEL ] && echo "${msg}" >&2
 }
 
 #/*
@@ -209,7 +214,12 @@ function log_msg() {
   local msg_lvl=$1
   local msg=$2
 
-  echo -e "`date +"%b %_d %T"` `hostname` $DAEMON_NAME[$DAEMON_PID]: ${msg}" >> ${GBL_LOG_FILE}
+  if [ $GBL_LOG_FILE == $DEF_LOG_FILE ]; then
+    `logger -t $DAEMON_NAME -p $msg_lvl $msg`
+  else
+    echo -e "`date +"%b %_d %T"` `hostname` $DAEMON_NAME[$DAEMON_PID]: ${msg}" >> ${GBL_LOG_FILE}
+  fi
+
   print_msg $msg_lvl "${msg}"
 }
 
