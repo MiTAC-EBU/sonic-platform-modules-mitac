@@ -10,6 +10,7 @@
 #include <linux/jiffies.h>
 #include <linux/i2c/pmbus.h>
 #include "pmbus.h"
+#include <linux/version.h>
 
 /*
  * Number of additional attribute pointers to allocate
@@ -792,8 +793,12 @@ static ssize_t pmbus_show_mfr(struct device *dev,
 	if (mfr->data < 0)
 		return mfr->data;
 
+#if LINUX_VERSION_CODE <= KERNEL_VERSION(3,16,49)
 	/* mfr->data[0] is data length, we don't want show data length when show command */
 	return snprintf(buf, PAGE_SIZE, "%s\n", &mfr->data_buf[1]);
+#else
+	return snprintf(buf, PAGE_SIZE, "%s\n", &mfr->data_buf);
+#endif
 }
 
 static ssize_t pmbus_set_sensor(struct device *dev,
