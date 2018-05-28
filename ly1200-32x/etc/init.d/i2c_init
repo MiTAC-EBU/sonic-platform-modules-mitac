@@ -204,6 +204,7 @@ load_i2c_dev_modules () {
 case "$1" in
 start)
     echo -n "Setting up board... "
+    depmod -a
     load_i2c_dev_modules
     load_modules
     echo "done."
